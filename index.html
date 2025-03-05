@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Your Name | Portfolio</title>
+    <style>
+        /* Base styles */
+        :root {
+            --text-color: #ffffff;
+            --background-color: #1b1f22;
+            --accent-color: #ffd1dc; /* Soft pink */
+            --border-color: rgba(255, 255, 255, 0.25);
+            --link-hover-color: #ffd1dc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animation Styles */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(27, 31, 34, 0.85);
+            z-index: -1;
+        }
+
+        #wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.5);
+        }
+
+        a:hover {
+            color: var(--link-hover-color);
+            border-bottom-color: var(--link-hover-color);
+        }
+
+        /* Header */
+        #header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            max-width: 35rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 2rem auto;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* To replace with actual photo, use this CSS and replace the img src
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        */
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%;
+        }
+
+        .content {
+            border-style: solid;
+            border-color: var(--border-color);
+            border-width: 1px 0;
+            max-width: 100%;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .inner {
+            max-width: 35rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        nav {
+            margin-top: 1.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav li {
+            margin: 0 0.5rem;
+        }
+
+        nav a {
+            display: block;
+            min-width: 7.5rem;
+            padding: 0.5rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            font-size: 0.8rem;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 209, 220, 0.1);
+            transition: transform 0.5s ease;
+            z-index: -1;
+        }
+
+        nav a:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav a:hover:before {
+            transform: translateX(100%);
+        }
+
+        /* Main */
+        #main {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 45rem;
+            margin: 0 auto;
+            display: none;
+        }
+
+        article {
+            padding: 2.5rem;
+            background: rgba(27, 31, 34, 0.9);
+            border-radius: 4px;
+            position: relative;
+            display: none;
+        }
+
+        h2.major {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: 0.04rem;
+        }
+
+        p {
+            font-weight: 300;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+            max-width: 700px;
+            letter-spacing: 0.01rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 400;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.03rem;
+        }
+
+        .image.main {
+            display: block;
+            margin: 2rem 0;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .image.main img {
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.075);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.125);
+        }
+
+        /* Footer */
+        #footer {
+            width: 100%;
+            max-width: 35rem;
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 736px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            article {
+                padding: 2rem;
+            }
+
+            nav a {
+                min-width: 6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin: 0.5rem 0;
+                width: 100%;
+            }
+
+            nav a {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Instructions for adding your video background:
+To add a video background:
+1. Upload your video file to your Replit project (ideally an .mp4 file)
+2. Update the video source in the HTML to point to your video file
+3. Example: <source src="your-background-video.mp4" type="video/mp4">
+4. For best results, use a dark, subtle video that won't distract from your content
+-->
+    <!-- Video Background -->
+    <div id="bg">
+        <video autoplay muted loop id="background-video">
+            <!-- In Replit, you'll need to upload your own video file and update this source -->
+            <source src="background-video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <div class="profile-photo">
+                <img src="cropped-image.png" alt="Swensea Ng" />
+            </div>
+            <div class="content">
+                <div class="inner">
+                    <h1>SWENSEA NG</h1>
+                    <div class="subtitle">DATA-DRIVEN IT PROFESSIONAL</div>
+                    <div class="contact-info">
+                        Seattle, WA | <a href="mailto:swensean@gmail.com">swensean@gmail.com</a> | <a href="https://linkedin.com/in/swensea" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#work">Experience</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main">
+            <!-- About -->
+            <article id="about">
+                <h2 class="major">About Me</h2>
+                <p>I'm a versatile business professional with experience spanning strategy, analytics, product development cycle, and project management across multiple industries. Currently pursuing a Master's in Information Systems at the University of Washington, I blend technical expertise with business acumen to drive data-informed decision making and successful organizational initiatives.</p>
+
+                <h3 style="font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem;">Global Perspective</h3>
+                <p>Having grown up in Malaysia, Beijing, and Singapore before moving to the United States, I bring a unique global perspective that enhances my ability to navigate complex business environments. This multicultural background has fostered my adaptability, communication skills, and talent for building relationships with diverse stakeholders—essential qualities for success in today's interconnected business world.</p>
+
+                <h3 style="font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem;">Versatile Skillset</h3>
+                <p>My experience across retail (Nordstrom and Costco), biotech and diagnostics (Agilent Technologies), and healthcare (APACMed) has equipped me with a versatile toolkit applicable to multiple business functions. I excel in translating data into actionable business insights, managing cross-functional teams, identifying market opportunities, and developing strategic solutions that align with organizational goals—core competencies that transfer seamlessly across various business disciplines.</p>
+
+                <h3 style="font-size: 1.3rem; margin-top: 2rem; margin-bottom: 1rem;">Business Impact</h3>
+                <p>I'm passionate about creating measurable business impact through strategic thinking and analytical problem-solving. With growing expertise in SQL, Python, and data visualization tools, I connect technical solutions with business needs. Whether developing products, conducting market analyses, optimizing business processes, or building client relationships, I bring a collaborative approach and results-oriented mindset to every challenge.</p>
+                <div class="close">Close</div>
+            </article>
+
+            <!-- Work Experience -->
+            <article id="work">
+                <h2 class="major">Experience</h2>
+
+                <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 30px;">
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">Costco IT</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Merchandising IT Delivery Management Intern</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">Jan 2025 - Present</div>
+                        <div style="font-size: 0.875rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;">
+                            In my current role at Costco IT, I lead end-to-end product development and oversee various stages of the product life cycle for digital solutions designed for Costco's buying team. I contribute from ideation through proof of concept to full-scale digitization of a key app, while also selecting and implementing enterprise-wide API management tools. My work involves collaborating with cross-functional teams to analyze performance metrics, streamline workflows, and deliver strategic insights that drive digital transformation.
+                        </div>
+                    </div>
+
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">Nordstrom</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Retail Sales Associate</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">March 2023 - Dec 2024</div>
+                        <div style="font-size: 0.875rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;">
+                            At Nordstrom, I played a key role in retail sales by leveraging digital strategies and data insights to enhance customer experiences and drive consistent revenue growth. I focused on building strong customer relationships and ensuring the store met its performance objectives by delivering personalized shopping experiences through customer data. By utilizing digital selling and e-commerce tactics, I created seamless online experiences that strengthened customer loyalty and consistently exceeded sales targets.
+                        </div>
+                    </div>
+
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">Agilent Technologies</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Project Coordinator</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">Aug 2022 - Dec 2023</div>
+                        <div style="font-size: 0.875rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;">
+                            At Agilent Technologies, I coordinated multiple projects in a fast-paced research environment under the Project Management Organisation of Resolution Bioscience—a subsidiary specializing in liquid biopsy diagnostics for precision oncology. I managed the Research Use division, supporting pharmaceutical projects and client engagements by leading cross-functional teams, streamlining processes, and aligning efforts with client objectives. My collaboration with the product management team to navigate regulatory requirements ultimately contributed to the FDA approval of a key diagnostic assay, enhancing our impact in precision oncology.
+                        </div>
+                    </div>
+
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">Asia Pacific Medical Technology Association (APACMed)</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Project Manager Intern, Government Affairs and Market Access</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">Jan 2021 - June 2021</div>
+                        <div style="font-size: 0.875rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;">
+                            During my internship at APACMed, the leading MedTech industry association in the Asia Pacific region, I played an instrumental role in influencing healthcare policy across Southeast Asian countries. I supported initiatives to improve access to medical technology by promoting COVID-19 test kit adoption and telemedicine solutions, positioning these as essential to reopening safely post-pandemic. I organized strategic webinars and white paper sessions, worked closely with government stakeholders and top industry players—including Johnson and Johnson, BD, Roche, Siemens, and Boston Scientific—and facilitated key opinion leader sessions to foster dialogue between policymakers and industry leaders.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="close">Close</div>
+            </article>
+
+            <!-- Education -->
+            <article id="education">
+                <h2 class="major">Education</h2>
+
+                <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 30px;">
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">University of Washington – Michael G. Foster School of Business</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Masters of Science in Information Systems</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">2024-2025</div>
+                        <div style="font-size: 0.875rem; font-weight: 300; line-height: 1.7; letter-spacing: 0.01em;">
+                            Relevant coursework: Managing IT projects with Agile, Advanced Data Mining & Analytics, Advanced Database Systems
+                        </div>
+                    </div>
+
+                    <div style="background-color: #2a2e35; border: 2px solid #444; border-radius: 3px; padding: 30px;">
+                        <div style="font-size: 1.6rem; font-weight: 400; margin-bottom: 16px; color: #ffd1dc; letter-spacing: 0.02em;">University of Washington – School of Medicine</div>
+                        <div style="font-size: 0.8rem; font-weight: 400; font-style: italic; letter-spacing: 0.02em; margin-bottom: 12px;">Bachelor of Science in Microbiology</div>
+                        <div style="font-size: 0.8rem; font-weight: 300; color: #aaa; margin-bottom: 16px; letter-spacing: 0.01em;">2018-2022</div>
+                    </div>
+                </div>
+
+                <div class="close">Close</div>
+            </article>
+
+            <!-- Projects -->
+            <article id="projects">
+                <h2 class="major">Projects</h2>
+
+                <h3>AI-Driven Recommendation Platform</h3>
+                <p>Developed an AI-powered event management system to foster an AI driven community for the University of Washington</p>
+                <ul>
+                    <li>Conducted user interviews, ideated and designed a recommendation-based platform</li>
+                    <li>Defined product features, OKRs, and success metrics to align with user needs</li>
+                    <li>Developed a functioning recommendation model using Amazon Personalize</li>
+                    <li>Built and tested the recommendation system, ensuring seamless functionality</li>
+                </ul>
+
+                <div class="close">Close</div>
+            </article>
+
+            <!-- Skills -->
+            <article id="skills">
+                <h2 class="major">Skills</h2>
+
+                <h3>Technical Skills</h3>
+                <p>Advanced SQL (complex joins, subqueries, window functions), Excel (Pivot Tables, VLOOKUP, INDEX/MATCH), Python, R, Snowflake, Power BI, Tableau</p>
+
+                <h3>Project Management</h3>
+                <p>Agile Methodologies, Stakeholder Management, Requirements Gathering, Project Planning, Risk Management, Executive Communication</p>
+
+                <h3>Business Analysis</h3>
+                <p>Data Analysis, Process Improvement, Business Requirements, User Research, Product Management, Strategic Planning</p>
+
+                <div class="close">Close</div>
+            </article>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <p class="copyright">© 2025 Swensea Ng. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle navigation
+            const links = document.querySelectorAll('nav a');
+            const articles = document.querySelectorAll('article');
+            const main = document.getElementById('main');
+            let currentArticle = null;
+
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetArticle = document.getElementById(targetId);
+
+                    // If we already have an article open, fade it out first
+                    if (currentArticle) {
+                        fadeOut(currentArticle, function() {
+                            // After fadeout completes, fade in the new article
+                            fadeIn(targetArticle);
+                        });
+                    } else {
+                        // If no article is open, just fade in the main area and the target article
+                        if (main.style.display !== 'block') {
+                            main.style.opacity = '0';
+                            main.style.display = 'block';
+                            setTimeout(() => {
+                                main.style.transition = 'opacity 0.4s ease';
+                                main.style.opacity = '1';
+                            }, 10);
+                        }
+                        fadeIn(targetArticle);
+                    }
+
+                    // Update current article
+                    currentArticle = targetArticle;
+
+                    // Smooth scroll to the article
+                    window.scrollTo({
+                        top: main.offsetTop - 50,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Handle close buttons with animation
+            const closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const article = this.parentElement;
+
+                    fadeOut(article, function() {
+                        // Fade out the main container too
+                        main.style.transition = 'opacity 0.4s ease';
+                        main.style.opacity = '0';
+
+                        setTimeout(() => {
+                            main.style.display = 'none';
+                            currentArticle = null;
+
+                            // Smooth scroll back to top
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                        }, 400);
+                    });
+                });
+            });
+
+            // Helper function to fade in an element
+            function fadeIn(element) {
+                // Make sure all other articles are hidden
+                articles.forEach(article => {
+                    if (article !== element) {
+                        article.style.display = 'none';
+                    }
+                });
+
+                // Fade in the element
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.display = 'block';
+
+                setTimeout(() => {
+                    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 10);
+            }
+
+            // Helper function to fade out an element with callback
+            function fadeOut(element, callback) {
+                element.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    element.style.display = 'none';
+                    if (callback) callback();
+                }, 400);
+            }
+        });
+    </script>
+</body>
+</html>
